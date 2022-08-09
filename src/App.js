@@ -12,7 +12,7 @@ let CARDS = [
 
 function App() {
   const [cards, setCards] = useState([]);
-  const [turns, setTurns] = useState(0)
+  const [turns, setTurns] = useState(0);
 
   const cardShuffler = () => {
     let shuffledCards = [...CARDS, ...CARDS]
@@ -21,28 +21,56 @@ function App() {
 
     setCards(shuffledCards);
 
-    setTurns(0)
+    setTurns(0);
   };
 
-  const plusTurn = () => {
-    setTurns((turns) => 
-      turns + 1
-    )
+  const [choiceOne, setChoiceOne] = useState(null)
+  const [choiceTwo, setChoiceTwo] = useState(null)
+
+  const handleClick = (e) => {
+    plusTurn()
+
+    console.dir(e.target)
+
+    if(!choiceOne) {
+      setChoiceOne(e.target.innerText)
+    } else if(!choiceTwo) {
+      setChoiceTwo(e.target.innerText)
+
+    }
   }
+
+  const plusTurn = () => {
+    setTurns((turns) => turns + 1);
+  };
 
   useEffect(() => {
     cardShuffler();
   }, []);
 
+  useEffect(() => {
+    if(choiceOne && choiceOne === choiceTwo) {
+      alert('Match')
+      setChoiceOne(null)
+      setChoiceTwo(null)
+    } else {
+      alert('No Match')
+      setChoiceOne(null)
+      setChoiceTwo(null)
+    }
+  }, [choiceTwo])
+
   return (
     <div>
       {cards.map((card) => {
-      return (
-      <div key={card.id} onClick={plusTurn} >{card.content}</div>
-      )
-    })}
-    <p>{turns}</p>
-    <button onClick={cardShuffler}>New game</button>
+        return (
+          <div key={card.id} onClick={handleClick}>
+            {card.content}
+          </div>
+        );
+      })}
+      <p>{turns}</p>
+      <button onClick={cardShuffler}>New game</button>
     </div>
   );
 }
