@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import Card from "./components/card/card.component";
 
 let CARDS = [
-  { content: "🔥" },
-  { content: "👍🏼" },
-  { content: "💯" },
-  { content: "💰" },
-  { content: "⏳" },
-  { content: "🚲" },
+  { content: "🔥", title: 'El fueguito' },
+  { content: "👍🏼", title: 'El todobien'  },
+  { content: "💯", title: 'El melo'  },
+  { content: "💰", title: 'El bichote'  },
+  { content: "⏳", title: 'El time'  },
+  { content: "😈", title: 'El prendido'  },
 ];
+
+//Add property to check they are not clicking the same card
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -24,24 +27,22 @@ function App() {
     setTurns(0);
   };
 
-  const [choiceOne, setChoiceOne] = useState(null)
-  const [choiceTwo, setChoiceTwo] = useState(null)
+  const [choiceOne, setChoiceOne] = useState(null);
+  const [choiceTwo, setChoiceTwo] = useState(null);
 
-  const handleClick = (e) => {
-    plusTurn()
+  const handleChoice = (card) => {
 
-    console.dir(e.target)
-
-    if(!choiceOne) {
-      setChoiceOne(e.target.innerText)
-    } else if(!choiceTwo) {
-      setChoiceTwo(e.target.innerText)
-
+    if (!choiceOne) {
+      setChoiceOne(card.content);
+    } else if (!choiceTwo && card) {
+      setChoiceTwo(card.content);
     }
-  }
+  };
 
   const plusTurn = () => {
     setTurns((turns) => turns + 1);
+    setChoiceOne(null);
+    setChoiceTwo(null);
   };
 
   useEffect(() => {
@@ -49,25 +50,21 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if(choiceOne && choiceOne === choiceTwo) {
-      alert('Match')
-      setChoiceOne(null)
-      setChoiceTwo(null)
-    } else {
-      alert('No Match')
-      setChoiceOne(null)
-      setChoiceTwo(null)
+    if (choiceOne && choiceTwo) {
+      if (choiceOne === choiceTwo) {
+        alert("Match");
+        plusTurn();
+      } else {
+        alert("No Match");
+        plusTurn();
+      }
     }
-  }, [choiceTwo])
+  }, [choiceOne, choiceTwo]);
 
   return (
     <div>
       {cards.map((card) => {
-        return (
-          <div key={card.id} onClick={handleClick}>
-            {card.content}
-          </div>
-        );
+        return <Card key={card.id} card={card} choiceHandler={handleChoice} />
       })}
       <p>{turns}</p>
       <button onClick={cardShuffler}>New game</button>
