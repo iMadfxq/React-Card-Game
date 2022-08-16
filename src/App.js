@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import "./App.css";
+import "./App.scss";
 import Card from "./components/card/card.component";
 
 let CARDS = [
-  { content: "🔥", title: 'El fueguito' },
-  { content: "👍🏼", title: 'El todobien'  },
-  { content: "💯", title: 'El melo'  },
-  { content: "💰", title: 'El bichote'  },
-  { content: "⏳", title: 'El time'  },
-  { content: "😈", title: 'El prendido'  },
+  { content: "🔥", title: "El fueguito", matched: "false" },
+  { content: "👍🏼", title: "El todobien", matched: "false" },
+  { content: "💯", title: "El melo", matched: "false" },
+  { content: "💰", title: "El bichote", matched: "false" },
+  { content: "⏳", title: "El time", matched: "false" },
+  { content: "😈", title: "El prendido", matched: "false" },
 ];
 
 //Add property to check they are not clicking the same card
@@ -31,13 +31,14 @@ function App() {
   const [choiceTwo, setChoiceTwo] = useState(null);
 
   const handleChoice = (card) => {
-
     if (!choiceOne) {
       setChoiceOne(card.content);
-    } else if (!choiceTwo && card) {
+    } else if (!choiceTwo) {
       setChoiceTwo(card.content);
     }
   };
+
+  // NEXT STEP: ASSIGN CHOICE FULL CARD, CHECK ID
 
   const plusTurn = () => {
     setTurns((turns) => turns + 1);
@@ -53,6 +54,15 @@ function App() {
     if (choiceOne && choiceTwo) {
       if (choiceOne === choiceTwo) {
         alert("Match");
+        setCards((oldCards) => {
+          return oldCards.map((c) => {
+            if(c.content === choiceOne) {
+              return {...c, matched: true}
+            } else {
+              return c
+            }
+          });
+        });
         plusTurn();
       } else {
         alert("No Match");
@@ -62,13 +72,22 @@ function App() {
   }, [choiceOne, choiceTwo]);
 
   return (
-    <div>
-      {cards.map((card) => {
-        return <Card key={card.id} card={card} choiceHandler={handleChoice} />
-      })}
-      <p>{turns}</p>
-      <button onClick={cardShuffler}>New game</button>
-    </div>
+    <main className="game">
+      <section className="game__cards">
+        {cards.map((card) => {
+          return (
+            <Card key={card.id} card={card} choiceHandler={handleChoice} 
+           flipped={choiceOne === card.content || choiceTwo === card.content || card.matched === true} />
+          );
+        })}
+      </section>
+      <section className="game__turnCounter">
+        <p>{turns}</p>
+      </section>
+      <section className="game__restarter">
+        <button onClick={cardShuffler}>New game</button>
+      </section>
+    </main>
   );
 }
 
