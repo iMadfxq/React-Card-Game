@@ -28,6 +28,8 @@ function App() {
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
 
+  const [gameJustOpened, setGameJustOpened] = useState(true)
+
   const handleChoice = (card) => {
     if (!choiceOne && !card.matched) {
       setChoiceOne(card);
@@ -53,6 +55,9 @@ function App() {
 
   useEffect(() => {
     cardShuffler();
+    setTimeout(() => {
+      setGameJustOpened(false)
+    }, 2000)
   }, []);
 
   useEffect(() => {
@@ -89,7 +94,7 @@ function App() {
               key={card.id}
               card={card}
               choiceHandler={handleChoice}
-              flipped={card === choiceOne || card === choiceTwo || card.matched}
+              flipped={card === choiceOne || card === choiceTwo || card.matched || gameJustOpened}
             />
           );
         })}
