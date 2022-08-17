@@ -1,10 +1,25 @@
+.game__cards--cover {
+  width: 140px;
+  height: 160px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-image: linear-gradient(180deg, #FFFFFF 0%, #6284FF 50%, #FF0000 100%);
+  margin: 10px;
+  border-radius: 20px;
+  border: 2px solid black;
+}
 .game__cards--item {
-  width: 120px;
+  border-radius: 20px;
+  transform: rotateY(90deg);
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 10px;
-  cursor: pointer;
+  justify-content: center;
+  transition: transform 500ms;
 
   span {
     font-size: 6rem;
@@ -12,10 +27,11 @@
   p {
     text-align: center;
     font-size: 2.2rem;
+    color: white;
   }
   
   
 }
 .fliped {
-  background-color: red;
+  transform: rotateY(0deg);
 }

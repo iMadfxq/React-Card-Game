@@ -44,9 +44,11 @@ function App() {
   };
 
   const plusTurn = () => {
-    setTurns((turns) => turns + 1);
-    setChoiceOne(null);
-    setChoiceTwo(null);
+    setTimeout(() => {
+      setTurns((turns) => turns + 1);
+      setChoiceOne(null);
+      setChoiceTwo(null);
+    }, 1000)
   };
 
   useEffect(() => {
@@ -59,7 +61,6 @@ function App() {
         choiceOne.content === choiceTwo.content &&
         choiceOne.id != choiceTwo.id
       ) {
-        alert("Match");
         setCards((oldCards) => {
           return oldCards.map((c) => {
             if (c.content === choiceOne.content) {
@@ -74,7 +75,6 @@ function App() {
       //return
       //}
       else {
-        alert("No Match");
         plusTurn();
       }
     }
