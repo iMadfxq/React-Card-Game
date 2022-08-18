@@ -85,6 +85,14 @@ function App() {
     }
   }, [choiceOne, choiceTwo]);
 
+const newGameStarter = () => {
+  cardShuffler()
+  setGameJustOpened(true)
+  setTimeout(() => {
+    setGameJustOpened(false)
+  }, 2000)
+}
+
   return (
     <main className="game">
       <section className="game__cards">
@@ -103,7 +111,7 @@ function App() {
         <p>{turns}</p>
       </section>
       <section className="game__restarter">
-        <button onClick={cardShuffler}>New game</button>
+        <button onClick={newGameStarter}>New game</button>
       </section>
     </main>
   );

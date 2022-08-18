@@ -7,7 +7,7 @@ export default function Card({ card, choiceHandler, flipped }) {
   return (
     <div
       onClick={handleClick}
-      className="game__cards--cover"
+      className={flipped ? "game__cards--cover fliped" : "game__cards--cover"}
     >
       <div className={flipped ? "game__cards--item fliped" : "game__cards--item"}>
         <span>{card.content}</span>
