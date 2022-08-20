@@ -28,6 +28,8 @@ function App() {
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
 
+  const [matched, setMatched] = useState(0)
+
   const [gameJustOpened, setGameJustOpened] = useState(true)
 
   const handleChoice = (card) => {
@@ -46,8 +48,8 @@ function App() {
   };
 
   const plusTurn = () => {
+    setTurns((turns) => turns + 1);
     setTimeout(() => {
-      setTurns((turns) => turns + 1);
       setChoiceOne(null);
       setChoiceTwo(null);
     }, 1000)
@@ -66,6 +68,7 @@ function App() {
         choiceOne.content === choiceTwo.content &&
         choiceOne.id != choiceTwo.id
       ) {
+        setMatched(oldAmount => oldAmount + 1)
         setCards((oldCards) => {
           return oldCards.map((c) => {
             if (c.content === choiceOne.content) {
@@ -108,7 +111,8 @@ const newGameStarter = () => {
         })}
       </section>
       <section className="game__turnCounter">
-        <p>{turns}</p>
+        <p>Total turns: {turns}</p>
+        <p>Total cards matched: {matched} / {CARDS.length}</p>
       </section>
       <section className="game__restarter">
         <button onClick={newGameStarter}>New game</button>
