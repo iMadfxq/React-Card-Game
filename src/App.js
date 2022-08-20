@@ -21,24 +21,27 @@ function App() {
       .map((card) => ({ ...card, id: Math.random() }));
 
     setCards(shuffledCards);
-
+    setMatched(0);
     setTurns(0);
   };
 
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
 
-  const [matched, setMatched] = useState(0)
+  const [matched, setMatched] = useState(0);
 
-  const [gameJustOpened, setGameJustOpened] = useState(true)
+  const [timeLeftToSee, setTimeLeftToSee] = useState(2);
+  const [showTimeLeft, setShowTimeLeft] = useState(true)
+
+  const [gameJustOpened, setGameJustOpened] = useState(true);
 
   const handleChoice = (card) => {
     if (!choiceOne && !card.matched) {
       setChoiceOne(card);
-    } else if (!choiceOne && card.matched ) {
+    } else if (!choiceOne && card.matched) {
       return;
-    } else if((choiceOne && !choiceTwo) && card === choiceOne) {
-      return
+    } else if (choiceOne && !choiceTwo && card === choiceOne) {
+      return;
     } else if (!choiceTwo && card.id === choiceOne.id) {
       setChoiceOne(null);
       setChoiceTwo(null);
@@ -52,14 +55,27 @@ function App() {
     setTimeout(() => {
       setChoiceOne(null);
       setChoiceTwo(null);
-    }, 1000)
+    }, 1000);
   };
 
+  const showCounter = () => {
+    const timeLeftToSeeInterval = setInterval(() => {
+      setTimeLeftToSee((state) => state - 0.1);
+    }, 100);
+    setTimeout(() => {
+      clearInterval(timeLeftToSeeInterval);
+      setTimeLeftToSee(2)
+    }, 2000)
+  }
+ 
   useEffect(() => {
     cardShuffler();
+    setShowTimeLeft(true)
     setTimeout(() => {
-      setGameJustOpened(false)
-    }, 2000)
+      setGameJustOpened(false);
+      setShowTimeLeft(false)
+    }, 2000);
+    showCounter()
   }, []);
 
   useEffect(() => {
@@ -68,7 +84,7 @@ function App() {
         choiceOne.content === choiceTwo.content &&
         choiceOne.id != choiceTwo.id
       ) {
-        setMatched(oldAmount => oldAmount + 1)
+        setMatched((oldAmount) => oldAmount + 1);
         setCards((oldCards) => {
           return oldCards.map((c) => {
             if (c.content === choiceOne.content) {
@@ -88,13 +104,16 @@ function App() {
     }
   }, [choiceOne, choiceTwo]);
 
-const newGameStarter = () => {
-  cardShuffler()
-  setGameJustOpened(true)
-  setTimeout(() => {
-    setGameJustOpened(false)
-  }, 2000)
-}
+  const newGameStarter = () => {
+    cardShuffler();
+    showCounter()
+    setGameJustOpened(true);
+    setShowTimeLeft(true)
+    setTimeout(() => {
+      setShowTimeLeft(false)
+      setGameJustOpened(false);
+    }, 2000);
+  };
 
   return (
     <main className="game">
@@ -105,17 +124,25 @@ const newGameStarter = () => {
               key={card.id}
               card={card}
               choiceHandler={handleChoice}
-              flipped={card === choiceOne || card === choiceTwo || card.matched || gameJustOpened}
+              flipped={
+                card === choiceOne ||
+                card === choiceTwo ||
+                card.matched ||
+                gameJustOpened
+              }
             />
           );
         })}
       </section>
       <section className="game__turnCounter">
         <p>Total turns: {turns}</p>
-        <p>Total cards matched: {matched} / {CARDS.length}</p>
+        <p>
+          Total cards matched: {matched} / {CARDS.length}
+        </p>
       </section>
       <section className="game__restarter">
         <button onClick={newGameStarter}>New game</button>
+        <p>{showTimeLeft ? timeLeftToSee : ''}</p>
       </section>
     </main>
   );
