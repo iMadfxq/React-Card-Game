@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import "./App.scss";
 import Card from "./components/card/card.component";
+import NewGameButton from "./components/NewGameButton/NewGameButton.component.jsx";
+import MatchesCounter from "./components/MatchesCounter/MatchesCounter.component.jsx";
+import TurnsCounter from "./components/TurnsCounter/TurnsCounter.component.jsx";
+import TimeLeftToSeeCounter from "./components/TimeLeftToSeeCounter/TimeLeftToSeeCounter.component.jsx";
 
 let CARDS = [
   { content: "🔥", title: "El fueguito", matched: false },
@@ -31,7 +35,7 @@ function App() {
   const [matched, setMatched] = useState(0);
 
   const [timeLeftToSee, setTimeLeftToSee] = useState(2);
-  const [showTimeLeft, setShowTimeLeft] = useState(true)
+  const [showTimeLeft, setShowTimeLeft] = useState(true);
 
   const [gameJustOpened, setGameJustOpened] = useState(true);
 
@@ -64,18 +68,18 @@ function App() {
     }, 100);
     setTimeout(() => {
       clearInterval(timeLeftToSeeInterval);
-      setTimeLeftToSee(2)
-    }, 2000)
-  }
- 
+      setTimeLeftToSee(2);
+    }, 2000);
+  };
+
   useEffect(() => {
     cardShuffler();
-    setShowTimeLeft(true)
+    setShowTimeLeft(true);
     setTimeout(() => {
       setGameJustOpened(false);
-      setShowTimeLeft(false)
+      setShowTimeLeft(false);
     }, 2000);
-    showCounter()
+    showCounter();
   }, []);
 
   useEffect(() => {
@@ -106,11 +110,11 @@ function App() {
 
   const newGameStarter = () => {
     cardShuffler();
-    showCounter()
+    showCounter();
     setGameJustOpened(true);
-    setShowTimeLeft(true)
+    setShowTimeLeft(true);
     setTimeout(() => {
-      setShowTimeLeft(false)
+      setShowTimeLeft(false);
       setGameJustOpened(false);
     }, 2000);
   };
@@ -134,16 +138,10 @@ function App() {
           );
         })}
       </section>
-      <section className="game__turnCounter">
-        <p>Total turns: {turns}</p>
-        <p>
-          Total cards matched: {matched} / {CARDS.length}
-        </p>
-      </section>
-      <section className="game__restarter">
-        <button onClick={newGameStarter}>New game</button>
-        <p>{showTimeLeft ? timeLeftToSee : ''}</p>
-      </section>
+      <MatchesCounter TotalCards={CARDS.length} matched={matched} />
+      <TurnsCounter turns={turns} />
+      <TimeLeftToSeeCounter time={showTimeLeft ? timeLeftToSee : ""} />
+      <NewGameButton newGameStarter={newGameStarter} />
     </main>
   );
 }
