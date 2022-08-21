@@ -34,7 +34,7 @@ function App() {
 
   const [matched, setMatched] = useState(0);
 
-  const [timeLeftToSee, setTimeLeftToSee] = useState(2);
+  const [timeLeftToSee, setTimeLeftToSee] = useState(3);
   const [showTimeLeft, setShowTimeLeft] = useState(true);
 
   const [gameJustOpened, setGameJustOpened] = useState(true);
@@ -59,17 +59,17 @@ function App() {
     setTimeout(() => {
       setChoiceOne(null);
       setChoiceTwo(null);
-    }, 1000);
+    }, 500);
   };
 
   const showCounter = () => {
     const timeLeftToSeeInterval = setInterval(() => {
-      setTimeLeftToSee((state) => state - 0.1);
-    }, 100);
+      setTimeLeftToSee((state) => state - 0.5);
+    }, 500);
     setTimeout(() => {
       clearInterval(timeLeftToSeeInterval);
-      setTimeLeftToSee(2);
-    }, 2000);
+      setTimeLeftToSee(3);
+    }, 3000);
   };
 
   useEffect(() => {
@@ -78,7 +78,7 @@ function App() {
     setTimeout(() => {
       setGameJustOpened(false);
       setShowTimeLeft(false);
-    }, 2000);
+    }, 3000);
     showCounter();
   }, []);
 
@@ -116,11 +116,14 @@ function App() {
     setTimeout(() => {
       setShowTimeLeft(false);
       setGameJustOpened(false);
-    }, 2000);
+    }, 3000);
   };
 
   return (
     <main className="game">
+      <h1>React Card Game</h1>
+      <TurnsCounter turns={turns} />
+      <TimeLeftToSeeCounter time={showTimeLeft ? timeLeftToSee : "😈"} />
       <section className="game__cards">
         {cards.map((card) => {
           return (
@@ -139,8 +142,6 @@ function App() {
         })}
       </section>
       <MatchesCounter TotalCards={CARDS.length} matched={matched} />
-      <TurnsCounter turns={turns} />
-      <TimeLeftToSeeCounter time={showTimeLeft ? timeLeftToSee : ""} />
       <NewGameButton newGameStarter={newGameStarter} />
     </main>
   );

@@ -1,3 +1,5 @@
+import './TurnsCounter.styles.scss'
+
 export default function TurnCounter({turns}) {
-  return <p>Total turns: {turns}</p>
+  return <p className="game__TurnCounter">Total turns: {turns}</p>
 }

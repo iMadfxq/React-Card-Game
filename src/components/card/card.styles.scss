@@ -1,15 +1,20 @@
 .game__cards--cover {
-  width: 140px;
-  height: 160px;
+  width: 150px;
+  height: 150px;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background-color: blue;
+  background-color: black;
   margin: 10px;
   border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  transition: 400ms;
 
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.85);
+  }
 }
 .game__cards--item {
   border-radius: 20px;
