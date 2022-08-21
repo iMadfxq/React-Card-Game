@@ -40,17 +40,19 @@ function App() {
   const [gameJustOpened, setGameJustOpened] = useState(true);
 
   const handleChoice = (card) => {
-    if (!choiceOne && !card.matched) {
-      setChoiceOne(card);
-    } else if (!choiceOne && card.matched) {
-      return;
-    } else if (choiceOne && !choiceTwo && card === choiceOne) {
-      return;
-    } else if (!choiceTwo && card.id === choiceOne.id) {
-      setChoiceOne(null);
-      setChoiceTwo(null);
-    } else if (!choiceTwo && !card.matched) {
-      setChoiceTwo(card);
+    if(!gameJustOpened) {
+      if (!choiceOne && !card.matched) {
+        setChoiceOne(card);
+      } else if (!choiceOne && card.matched) {
+        return;
+      } else if (choiceOne && !choiceTwo && card === choiceOne) {
+        return;
+      } else if (!choiceTwo && card.id === choiceOne.id) {
+        setChoiceOne(null);
+        setChoiceTwo(null);
+      } else if (!choiceTwo && !card.matched) {
+        setChoiceTwo(card);
+      }
     }
   };
 
