@@ -5,6 +5,7 @@ import NewGameButton from "./components/NewGameButton/NewGameButton.component.js
 import MatchesCounter from "./components/MatchesCounter/MatchesCounter.component.jsx";
 import TurnsCounter from "./components/TurnsCounter/TurnsCounter.component.jsx";
 import TimeLeftToSeeCounter from "./components/TimeLeftToSeeCounter/TimeLeftToSeeCounter.component.jsx";
+import MobileMessage from './components/MobileMessage/MobileMessage.component.jsx'
 
 let CARDS = [
   { content: "🔥", title: "El fueguito", matched: false },
@@ -145,6 +146,7 @@ function App() {
       </section>
       <MatchesCounter TotalCards={CARDS.length} matched={matched} />
       <NewGameButton newGameStarter={newGameStarter} />
+      <MobileMessage />
     </main>
   );
 }
