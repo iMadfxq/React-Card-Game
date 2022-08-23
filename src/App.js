@@ -6,6 +6,7 @@ import MatchesCounter from "./components/MatchesCounter/MatchesCounter.component
 import TurnsCounter from "./components/TurnsCounter/TurnsCounter.component.jsx";
 import TimeLeftToSeeCounter from "./components/TimeLeftToSeeCounter/TimeLeftToSeeCounter.component.jsx";
 import MobileMessage from './components/MobileMessage/MobileMessage.component.jsx'
+import ScorePopUp from "./components/ScorePopUp/ScorePopUp.component";
 
 let CARDS = [
   { content: "🔥", title: "El fueguito", matched: false },
@@ -126,27 +127,28 @@ function App() {
     <main className="game">
       <h1>React Card Game</h1>
       <TurnsCounter turns={turns} />
-      <TimeLeftToSeeCounter time={showTimeLeft ? timeLeftToSee : "😈"} />
       <section className="game__cards">
         {cards.map((card) => {
           return (
             <Card
-              key={card.id}
-              card={card}
-              choiceHandler={handleChoice}
-              flipped={
-                card === choiceOne ||
-                card === choiceTwo ||
-                card.matched ||
-                gameJustOpened
-              }
+            key={card.id}
+            card={card}
+            choiceHandler={handleChoice}
+            flipped={
+              card === choiceOne ||
+              card === choiceTwo ||
+              card.matched ||
+              gameJustOpened
+            }
             />
-          );
-        })}
+            );
+          })}
       </section>
       <MatchesCounter TotalCards={CARDS.length} matched={matched} />
       <NewGameButton newGameStarter={newGameStarter} />
+          <TimeLeftToSeeCounter time={showTimeLeft ? timeLeftToSee : "😈"} />
       <MobileMessage />
+      <ScorePopUp turns={turns} matched={matched} newGameStarter={newGameStarter}/>
     </main>
   );
 }

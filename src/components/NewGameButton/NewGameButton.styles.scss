@@ -1,7 +1,7 @@
 .game__NewGameButton {
   margin-top: 10px;
-  font-size: 1.8rem;
-  padding: 10px;
+  font-size: 2rem;
+  padding: 15px;
   border: 1px solid black;
   border-radius: 20px;
   background-color:  black;
@@ -9,6 +9,7 @@
   font-weight: 700;
   transition: 400ms;
   cursor: pointer;
+  z-index: 2;
 
   &:hover {
     transform: scale(1.1);
