@@ -7,6 +7,7 @@ import TurnsCounter from "./components/TurnsCounter/TurnsCounter.component.jsx";
 import TimeLeftToSeeCounter from "./components/TimeLeftToSeeCounter/TimeLeftToSeeCounter.component.jsx";
 import MobileMessage from './components/MobileMessage/MobileMessage.component.jsx'
 import ScorePopUp from "./components/ScorePopUp/ScorePopUp.component";
+import Footer from "./components/footer/footer.component";
 
 let CARDS = [
   { content: "🔥", title: "El fueguito", matched: false },
@@ -149,6 +150,7 @@ function App() {
           <TimeLeftToSeeCounter time={showTimeLeft ? timeLeftToSee : "😈"} />
       <MobileMessage />
       <ScorePopUp turns={turns} matched={matched} newGameStarter={newGameStarter}/>
+      <Footer portfolio={'https://imadfxq.com/'} />
     </main>
   );
 }
