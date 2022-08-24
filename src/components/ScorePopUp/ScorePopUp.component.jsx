@@ -16,6 +16,13 @@ const score = (t, m) => {
   }
 };
 
+const closeWrapper = (e) => {
+  if (e.target.className === "game__ScorePopUp--wrapper show") {
+    e.stopPropagation();
+    e.target.className = "game__ScorePopUp--wrapper";
+  }
+}
+
 export default function ScorePopUp({ turns, matched, newGameStarter }) {
   let scoreWord = score(turns, matched);
 
@@ -46,9 +53,12 @@ export default function ScorePopUp({ turns, matched, newGameStarter }) {
           ? "game__ScorePopUp--wrapper show"
           : "game__ScorePopUp--wrapper"
       }
+      onClick={closeWrapper}
     >
       <section className="game__ScorePopUp">
-        <h2>Your score is: <span style={{color: scoreColor}}>{scoreWord}</span></h2>
+        <h2>
+          Your score is: <span style={{ color: scoreColor }}>{scoreWord}</span>
+        </h2>
         <ul>
           <li>Total turns: {turns}</li>
           <li>Total matches: {matched}</li>
