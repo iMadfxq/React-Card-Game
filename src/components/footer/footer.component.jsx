@@ -1,4 +1,4 @@
-import "./footer.styles.css";
+import "./footer.styles.scss";
 
 const Footer = ({ portfolio }) => {
   return (
